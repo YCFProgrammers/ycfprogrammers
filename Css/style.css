@@ -72,7 +72,7 @@ h2 {
 }
 .contenedor {
     text-align: center;
- }
+}
 
 .button-cate {
     display: inline-block;
@@ -276,18 +276,20 @@ button:hover {
 
 /* Menu desplegable */
 .dropdown {
-    position: relative;
+    position: relative
+    ;
 }
 
 .dropdown-button {
     background: none;
-    color: white;
+    color: rgb(255, 255, 255);
     border: none;
     padding: 10px 15px;
     font-size: 1.1rem;
     cursor: pointer;
     transition: color 0.3s ease;
 }
+
 
 .dropdown-button:hover {
     color: #ddd;
@@ -324,8 +326,6 @@ button:hover {
 .show {
     display: block;
 }
-
-
 
 * {
     box-sizing: border-box;
