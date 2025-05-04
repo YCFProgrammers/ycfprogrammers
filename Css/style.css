@@ -180,10 +180,10 @@ body {
 
 .container {
     background-color: #2a2a2a; /* Slightly lighter dark for the form container */
-    padding: 40px;
-    border-radius: 8px;
+    padding: 120px;
+    border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5); /* Subtle shadow */
-    width: 300px;
+    width: 550px;
     text-align: center;
 }
 
@@ -497,3 +497,4 @@ footer {
         height: 150px;
     }
 }
+

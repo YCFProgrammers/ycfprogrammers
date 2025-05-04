@@ -4,93 +4,205 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Coding Study Group</title>
-    <link rel="stylesheet" href="/Css/style.css"> <style>
-        /* Estilos básicos para el dashboard */
+    <link rel="stylesheet" href="style.css"> <style>
+        /* Estilos básicos para el dashboard - Ajustados */
         body {
             font-family: sans-serif;
             background-color: #1a1a1a; /* Fondo oscuro */
             color: #ffffff; /* Texto blanco */
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Alinear arriba para contenido que puede crecer */
             min-height: 100vh;
             margin: 0;
-            text-align: center; /* Centra el contenido del contenedor */
+            padding: 20px; /* Añadir un poco de padding al cuerpo */
+            box-sizing: border-box; /* Incluir padding en el tamaño */
         }
 
-        .container {
-            background-color: #2a2a2a; /* Fondo oscuro del contenedor */
+        .container { /* Contenedor principal más amplio */
+            background-color: #2a2a2a;
             padding: 40px;
             border-radius: 8px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            width: 400px; /* Ajusta el ancho si es necesario */
-            max-width: 90%; /* Que no sea más ancho que la pantalla en móviles */
+            width: 800px; /* Ancho mayor para el dashboard */
+            max-width: 100%; /* Asegurar que no se salga en pantallas pequeñas */
+            text-align: left; /* Alinear texto a la izquierda por defecto */
+            margin-top: 20px; /* Espacio arriba */
         }
 
         h2 {
             margin-bottom: 20px;
             color: #00cc99;
+            text-align: center; /* Centrar títulos principales */
+        }
+
+        h3 {
+            margin-top: 30px;
+            margin-bottom: 15px;
+            color: #00cc99; /* Color de acento para subtítulos */
+            border-bottom: 1px solid #3a3a3a; /* Separador sutil */
+            padding-bottom: 5px;
+        }
+
+        .welcome-section {
+            text-align: center; /* Centrar el mensaje de bienvenida y el botón de cerrar sesión */
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #3a3a3a; /* Separador */
         }
 
         .welcome-message {
             font-size: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             color: #cccccc;
         }
 
-        button { /* Estilos para el botón de Cerrar Sesión, reutiliza tu estilo base */
-            background-color: #e53935; /* Color rojo para cerrar sesión */
+        /* Estilos para el formulario de Crear Proyecto */
+        .create-project-form .form-group {
+             margin-bottom: 15px; /* Menos espacio entre campos del formulario */
+        }
+
+         .create-project-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #cccccc;
+         }
+
+        .create-project-form input[type="text"],
+        .create-project-form textarea {
+             width: calc(100% - 22px); /* Ancho menos padding y borde */
+            padding: 10px;
+            background-color: #3a3a3a;
+            border: 1px solid #555; /* Borde sutil */
+            border-radius: 4px;
             color: #ffffff;
-            padding: 12px 20px;
+            box-sizing: border-box;
+            resize: vertical; /* Permitir redimensionar textarea verticalmente */
+        }
+
+         .create-project-form input[type="text"]:focus,
+         .create-project-form textarea:focus {
+            outline: none;
+            border-color: #00cc99; /* Resaltar al enfocar */
+            box-shadow: 0 0 5px rgba(0, 204, 153, 0.5);
+         }
+
+
+        .create-project-form button { /* Estilo para el botón de Crear */
+            background-color: #00cc99; /* Color verde */
+            color: #1a1a1a;
+            padding: 10px 20px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
             transition: background-color 0.3s ease;
+            margin-top: 10px;
         }
 
-        button:hover {
-            background-color: #c62828; /* Tono más oscuro al pasar el ratón */
+         .create-project-form button:hover {
+            background-color: #00b386; /* Verde más oscuro */
         }
 
-         .message { /* Estilos para mensajes de estado en el dashboard si los necesitas */
+        /* Estilos para la lista de proyectos */
+        #projectsList {
             margin-top: 20px;
-            padding: 10px;
+            padding: 0;
+            list-style: none; /* Quitar viñetas de lista */
+        }
+
+        #projectsList li {
+            background-color: #3a3a3a; /* Fondo para cada elemento de proyecto */
+            padding: 15px;
+            margin-bottom: 10px;
             border-radius: 4px;
+            border: 1px solid #555;
+        }
+
+        #projectsList li h4 {
+            margin-top: 0;
+            margin-bottom: 5px;
+            color: #00cc99;
+            font-size: 18px;
+        }
+
+        #projectsList li p {
+            margin-bottom: 5px;
+            color: #cccccc;
             font-size: 14px;
         }
 
-        .message.success {
+        #projectsList li .project-date {
+            font-size: 12px;
+            color: #888; /* Color gris para la fecha */
+        }
+
+         .message { /* Estilos para mensajes de estado (crear, listar) */
+            margin-top: 15px; /* Menos espacio arriba */
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+         }
+
+         .message.success {
             background-color: #d4edda; /* Verde claro */
             color: #155724; /* Verde oscuro */
             border: 1px solid #c3e6cb;
-        }
+         }
 
-        .message.error {
+         .message.error {
             background-color: #f8d7da; /* Rojo claro */
             color: #721c24; /* Rojo oscuro */
             border: 1px solid #f5c6cb;
-        }
+         }
+          .message.info {
+            background-color: #cce5ff; /* Azul claro */
+            color: #004085; /* Azul oscuro */
+            border: 1px solid #b8daff;
+         }
 
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Dashboard</h2>
-        <div id="welcomeMessage" class="welcome-message"></div>
-        <p>Este es el contenido de tu panel de control.</p>
-        <p>Información y opciones para usuarios logueados.</p>
+        <h2>Dashboard de Usuario</h2>
 
-        <button id="signOutBtn">Cerrar Sesión</button>
+        <div class="welcome-section">
+            <div id="welcomeMessage" class="welcome-message"></div>
+            <button id="signOutBtn">Cerrar Sesión</button>
+        </div>
 
-        <div id="dashboardMessage" class="message"></div> </div>
+        <h3>Crear Nuevo Proyecto</h3>
+        <div class="create-project-form">
+            <div class="form-group">
+                <label for="projectName">Nombre del Proyecto:</label>
+                <input type="text" id="projectName" required>
+            </div>
+            <div class="form-group">
+                <label for="projectDescription">Descripción:</label>
+                <textarea id="projectDescription" rows="4" required></textarea>
+            </div>
+            <button id="createProjectBtn">Crear Proyecto</button>
+            <div id="createProjectMessage" class="message"></div>
+        </div>
+
+        <h3>Mis Proyectos</h3>
+        <ul id="projectsList">
+            <li>No hay proyectos aún. Crea uno para empezar.</li> </ul>
+        <div id="listProjectsMessage" class="message"></div>
+
+
+    </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
 
     <script>
         // TODO: REEMPLAZA ESTE OBJETO con la configuración de tu proyecto Firebase
-        // ¡Es la misma configuración que usaste en script.js!
+        // Es la misma configuración que usaste en script.js y login.html/dashboard.html anteriores
         const firebaseConfig = {
             apiKey: "AIzaSyAPGfI248M3JM12_UC9n8pSc3EQdgnxyp8", // <-- Tus credenciales
             authDomain: "coding-study-group.firebaseapp.com",
@@ -106,26 +218,39 @@
 
         // Obtén la instancia de autenticación
         const auth = firebase.auth();
+        // ¡NUEVO! Obtén la instancia de Firestore
+        const db = firebase.firestore();
+
 
         // -------- Script para manejar el Dashboard --------
         document.addEventListener('DOMContentLoaded', () => {
             const welcomeMessageDiv = document.getElementById('welcomeMessage');
             const signOutButton = document.getElementById('signOutBtn');
-            const dashboardMessageDiv = document.getElementById('dashboardMessage'); // Div para mensajes del dashboard
+            const projectNameInput = document.getElementById('projectName');
+            const projectDescriptionInput = document.getElementById('projectDescription');
+            const createProjectBtn = document.getElementById('createProjectBtn');
+            const createProjectMessageDiv = document.getElementById('createProjectMessage');
+            const projectsListUl = document.getElementById('projectsList');
+            const listProjectsMessageDiv = document.getElementById('listProjectsMessage');
+
+
+            let currentUser = null; // Variable para guardar el usuario actual
 
             // Listener para verificar el estado de autenticación al cargar la página del dashboard
             auth.onAuthStateChanged((user) => {
                 if (user) {
                     // Usuario está logueado
                     console.log("Usuario logueado en Dashboard:", user);
+                    currentUser = user; // Guarda el usuario actual
 
                     // Muestra un mensaje de bienvenida con el nombre o email del usuario
                     welcomeMessageDiv.textContent = `Bienvenido, ${user.displayName || user.email}!`;
 
                     // Asegúrate de que el botón de cerrar sesión sea visible
-                    signOutButton.style.display = 'block';
+                    signOutButton.style.display = 'inline-block'; // Usamos inline-block para botones en línea
 
-                    // Aquí podrías cargar datos específicos del usuario si los tuvieras en otra base de datos (Firestore, etc.)
+                    // Ahora que sabemos quién es el usuario, cargamos sus proyectos
+                    loadUserProjects(currentUser.uid);
 
                 } else {
                     // No hay usuario logueado
@@ -136,14 +261,132 @@
                 }
             });
 
+            // -------- Funcionalidad para Crear Proyecto --------
+            if (createProjectBtn) {
+                createProjectBtn.addEventListener('click', async () => {
+                    const projectName = projectNameInput.value.trim();
+                    const projectDescription = projectDescriptionInput.value.trim();
+
+                    // Validar que los campos no estén vacíos
+                    if (!projectName || !projectDescription) {
+                        createProjectMessageDiv.textContent = 'Por favor, completa el nombre y la descripción del proyecto.';
+                        createProjectMessageDiv.className = 'message error';
+                        return;
+                    }
+
+                    if (!currentUser) {
+                        createProjectMessageDiv.textContent = 'Error: Usuario no autenticado.';
+                         createProjectMessageDiv.className = 'message error';
+                        console.error("Error: Intentando crear proyecto sin usuario autenticado.");
+                        // Podrías incluso redirigir a login si esto ocurre
+                        return;
+                    }
+
+                    createProjectMessageDiv.textContent = 'Creando proyecto...';
+                    createProjectMessageDiv.className = 'message info';
+
+
+                    try {
+                        // Añade un nuevo documento a la colección 'projects'
+                        const docRef = await db.collection('projects').add({
+                            name: projectName,
+                            description: projectDescription,
+                            ownerId: currentUser.uid, // Asocia el proyecto al usuario logueado
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp() // Añade una marca de tiempo del servidor
+                        });
+
+                        console.log("Proyecto creado con ID:", docRef.id);
+                        createProjectMessageDiv.textContent = 'Proyecto creado exitosamente.';
+                         createProjectMessageDiv.className = 'message success';
+
+                        // Limpiar el formulario
+                        projectNameInput.value = '';
+                        projectDescriptionInput.value = '';
+
+                        // La lista de proyectos se actualizará automáticamente gracias al listener en loadUserProjects
+
+                    } catch (error) {
+                        console.error("Error al crear el proyecto:", error);
+                         createProjectMessageDiv.textContent = `Error al crear el proyecto: ${error.message}`;
+                         createProjectMessageDiv.className = 'message error';
+                    }
+                });
+            }
+
+            // -------- Funcionalidad para Listar Proyectos --------
+            function loadUserProjects(userId) {
+                if (!userId) {
+                     projectsListUl.innerHTML = '<li>Error al cargar proyectos: Usuario no identificado.</li>';
+                     listProjectsMessageDiv.textContent = '';
+                     listProjectsMessageDiv.className = 'message';
+                    return;
+                }
+
+                listProjectsMessageDiv.textContent = 'Cargando proyectos...';
+                listProjectsMessageDiv.className = 'message info';
+
+                // Consulta Firestore: Obtiene proyectos donde el ownerId coincide con el userId actual
+                // .orderBy('createdAt', 'desc') para mostrarlos más recientes primero
+                // .onSnapshot() para obtener actualizaciones en tiempo real
+                db.collection('projects')
+                  .where('ownerId', '==', userId)
+                  .orderBy('createdAt', 'desc') // Ordena por fecha de creación descendente
+                  .onSnapshot((querySnapshot) => {
+                      // Este código se ejecuta cada vez que hay un cambio en la consulta (proyectos añadidos, modificados, eliminados)
+                      projectsListUl.innerHTML = ''; // Limpia la lista actual
+
+                      if (querySnapshot.empty) {
+                          projectsListUl.innerHTML = '<li>No tienes proyectos aún. ¡Crea uno!</li>';
+                          listProjectsMessageDiv.textContent = 'No se encontraron proyectos.';
+                           listProjectsMessageDiv.className = 'message info';
+                          return;
+                      }
+
+                      const projects = [];
+                      querySnapshot.forEach((doc) => {
+                          // Obtiene los datos de cada documento
+                          const projectData = doc.data();
+                          projects.push({
+                              id: doc.id, // Guarda el ID del documento
+                              ...projectData // Copia los otros campos (name, description, createdAt, etc.)
+                          });
+                      });
+
+                      // Muestra los proyectos en la lista HTML
+                      projects.forEach(project => {
+                          const listItem = document.createElement('li');
+                           // Formatear la fecha si existe
+                          const date = project.createdAt ? project.createdAt.toDate().toLocaleString() : 'Fecha desconocida';
+
+                          listItem.innerHTML = `
+                              <h4>${project.name}</h4>
+                              <p>${project.description}</p>
+                              <span class="project-date">Creado el: ${date}</span>
+                              `;
+                          projectsListUl.appendChild(listItem);
+                      });
+
+                      listProjectsMessageDiv.textContent = `Mostrando ${projects.length} proyecto(s).`;
+                       listProjectsMessageDiv.className = 'message success';
+
+
+                  }, (error) => {
+                      // Maneja errores al escuchar los cambios
+                      console.error("Error al cargar los proyectos:", error);
+                      projectsListUl.innerHTML = '<li>Error al cargar proyectos.</li>';
+                       listProjectsMessageDiv.textContent = `Error al cargar proyectos: ${error.message}`;
+                       listProjectsMessageDiv.className = 'message error';
+                  });
+            }
+
+
             // -------- Funcionalidad para el botón de Cerrar Sesión --------
             if (signOutButton) {
                 signOutButton.addEventListener('click', async () => {
-                     dashboardMessageDiv.textContent = ''; // Limpiar mensajes anteriores
-                     dashboardMessageDiv.className = 'message';
-
-                     dashboardMessageDiv.textContent = 'Cerrando sesión...';
-                     dashboardMessageDiv.classList.add('info'); // Estilo info para cerrar sesión
+                     welcomeMessageDiv.textContent = 'Cerrando sesión...';
+                     welcomeMessageDiv.classList.remove('success');
+                     welcomeMessageDiv.classList.add('info');
+                     signOutButton.style.display = 'none'; // Oculta el botón mientras cierra
 
                     try {
                         // Cierra la sesión del usuario en Firebase Authentication
@@ -151,21 +394,20 @@
                         console.log("Sesión cerrada exitosamente.");
 
                         // Redirige al usuario a la página de login después de cerrar sesión
-                         dashboardMessageDiv.textContent = 'Sesión cerrada. Redirigiendo...';
-                         dashboardMessageDiv.classList.remove('info');
-                         dashboardMessageDiv.classList.add('success');
+                         welcomeMessageDiv.textContent = 'Sesión cerrada. Redirigiendo...';
 
                          setTimeout(() => {
                             window.location.href = 'login.html';
-                         }, 1500); // Espera un momento antes de redirigir
+                         }, 1000); // Espera un momento antes de redirigir
 
 
                     } catch (error) {
                         // Si ocurre un error al cerrar sesión
                         console.error("Error al cerrar sesión:", error);
-                        dashboardMessageDiv.textContent = `Error al cerrar sesión: ${error.message}`;
-                        dashboardMessageDiv.classList.remove('info');
-                        dashboardMessageDiv.classList.add('error');
+                         welcomeMessageDiv.textContent = `Error al cerrar sesión: ${error.message}`;
+                         welcomeMessageDiv.classList.remove('info');
+                         welcomeMessageDiv.classList.add('error');
+                         signOutButton.style.display = 'inline-block'; // Vuelve a mostrar el botón si falla
                     }
                 });
             }
