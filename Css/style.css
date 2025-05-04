@@ -58,11 +58,37 @@ nav a:hover {
     text-align: center;
 }
 
+h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
 .server-icon {
     height: 200px;
     margin-bottom: 20px;
     max-width: 100%;
 }
+.contenedor {
+    text-align: center;
+  }
+  
+.button-cate {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0066ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+
+}
+.boton-enfoque {
+    text-align: center;
+}
+
+
 
 .hero h2 {
     font-size: 1.8rem;
