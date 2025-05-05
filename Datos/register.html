@@ -355,11 +355,11 @@
             if (strength === 0) {
                 color = 'transparent';
             } else if (strength === 1) {
-                color = var(--danger-color);
+                color = 'var(--danger-color)';
             } else if (strength === 2) {
-                color = var(--warning-color);
+                color = 'var(--warning-color)';
             } else {
-                color = var(--success-color);
+                color = 'var(--success-color)';
             }
             
             strengthMeter.style.width = `${width}%`;
@@ -458,5 +458,6 @@
             }
         });
     </script>
+</body>
 </body>
 </html>
