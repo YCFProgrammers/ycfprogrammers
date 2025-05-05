@@ -4,68 +4,85 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coding Study Group</title>
-    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="/Css/style_index.css">
     <link rel="icon" href="/img/icono_server.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <h1>Coding Study Group</h1>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Inicio</a></li>
-                <li><a href="Datos/Login.html">Inicia sesion</a></li>
-                <li class="dropdown">
-                    <button onclick="toggleDropdown()" class="dropdown-button">Categorías de Estudio</button>
-                    <ul id="categoriesDropdown" class="dropdown-content">
-                        <li><a href="html/desarrollo-web.html">Desarrollo Web</a></li>
-                        <li><a href="html/ia.html">Inteligencia Artificial</a></li>
-                        <li><a href="html/ciencia-de-datos.html">Ciencia de Datos</a></li>
-                        <li><a href="html/diseño-ui-ux.html">Diseño UI/UX</a></li>
-                        <li><a href="html/videojuegos.html">Programación de Videojuegos</a></li>
-                        <li><a href="html/ingles.html">Inglés</a></li><li>
-                        <li><a href="html/Proyectos.html">Proyectos</a></li>
-                        <li><a href="html/Ejercicios.html">Ejercicios</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-    </header>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="img/icono_server.png" alt="Logo" class="logo">
+                <h1>Coding Study Group</h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="nav-link"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="Datos/Login.html" class="nav-link"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle"><i class="fas fa-book"></i> Categorías <i class="fas fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="html/desarrollo-web.html"><i class="fas fa-code"></i> Desarrollo Web</a></li>
+                            <li><a href="html/ia.html"><i class="fas fa-brain"></i> Inteligencia Artificial</a></li>
+                            <li><a href="html/ciencia-de-datos.html"><i class="fas fa-chart-bar"></i> Ciencia de Datos</a></li>
+                            <li><a href="html/diseño-ui-ux.html"><i class="fas fa-paint-brush"></i> Diseño UI/UX</a></li>
+                            <li><a href="html/videojuegos.html"><i class="fas fa-gamepad"></i> Videojuegos</a></li>
+                            <li><a href="html/ingles.html"><i class="fas fa-language"></i> Inglés</a></li>
+                            <li><a href="html/Proyectos.html"><i class="fas fa-project-diagram"></i> Proyectos</a></li>
+                            <li><a href="html/Ejercicios.html"><i class="fas fa-dumbbell"></i> Ejercicios</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </header>
 
-    <section class="hero" id="inicio">
-        <img src="img/icono_server.png" alt="Icono del servidor" class="server-icon">
-        <h2>¿Qué es Coding Study Group?</h2>
-        <div class="intro-container">
-            
-            <p>Somos una comunidad apasionada por la programación que se reúne todos los días para aprender, compartir conocimientos y crecer juntos. 
-            
-            Nos enfocamos en diferentes áreas como <strong>Desarrollo Web, Ciencia de Datos, Diseño UI/UX, Inteligencia Artificial y Videojuegos</strong>.
-            </p>
-            
-            <p>Nuestro objetivo es impulsar el aprendizaje colaborativo, construir proyectos reales y apoyar tanto a principiantes como a programadores avanzados.
-            
-            ¡Únete a un espacio donde cada línea de código se escribe en equipo!
+        <section class="hero" id="inicio">
+            <div class="hero-content">
+                <h2>¿Qué es Coding Study Group?</h2>
+                <div class="intro-container">
+                    <p>Somos una comunidad apasionada por la programación que se reúne todos los días para aprender, compartir conocimientos y crecer juntos.</p>
+                    <p>Nos enfocamos en diferentes áreas como <strong>Desarrollo Web, Ciencia de Datos, Diseño UI/UX, Inteligencia Artificial y Videojuegos</strong>.</p>
+                    <p>Nuestro objetivo es impulsar el aprendizaje colaborativo, construir proyectos reales y apoyar tanto a principiantes como a programadores avanzados.</p>
+                    <p class="highlight">¡Únete a un espacio donde cada línea de código se escribe en equipo!</p>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="img/icono_server.png" alt="Icono del servidor" class="server-icon">
+            </div>
+        </section>
 
-    <section class="one" id="Enfoques">
-        <h2>Enfoques Principales</h2>
-        <div class="contenedor">
-            <Img src="img/enfoques.png" alt="enfoques">
-        </div>
-        <div class="boton-enfoque">
-            <a href="html/Categorias.html" class="button-cate">Categorías</a>
-        </div>
-    </section>
+        <section class="one" id="Enfoques">
+            <h2>Enfoques Principales</h2>
+            <div class="contenedor">
+                <img src="img/enfoques.png" alt="enfoques">
+            </div>
+            <div class="boton-enfoque">
+                <a href="html/Categorias.html" class="button-cate">Explorar Categorías</a>
+            </div>
+        </section>
 
+        <section class="buttons">
+            <button class="discord-btn" onclick="window.location.href='https://discord.gg/4gHTPrhz'">
+                <i class="fab fa-discord"></i> Unirse al Discord
+            </button>
+            <button class="github-btn" onclick="window.location.href='https://github.com/Coding-Study-Group'">
+                <i class="fab fa-github"></i> Ver en GitHub
+            </button>
+        </section>
 
-    <section class="buttons">
-        <button class="discord-btn" onclick="window.location.href='https://discord.gg/4gHTPrhz'">Unirse al Discord</button>
-        <button class="github-btn" onclick="window.location.href='https://github.com/Coding-Study-Group'">Ver en GitHub</button>
-    </section>
-
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Coding Study Group - Todos los derechos reservados.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div>
 
     <script src="Js/script.js"></script>
-
-    <footer>
-        <p>&copy; 2025 Coding Study Group - Todos los derechos reservados.</p>
-    </footer>
 </body>
 </html>
