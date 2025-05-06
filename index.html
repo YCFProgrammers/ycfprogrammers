@@ -323,7 +323,7 @@
     <div class="container">
         <header>
             <div class="logo-container">
-                <img src="/img/icono_server.png" alt="Logo" class="logo">
+                <img src="./img/icono_server.png" alt="Logo" class="logo">
                 <h1>Coding Study Group</h1>
             </div>
             <nav>
@@ -434,6 +434,18 @@
                 </div>
                 <button type="submit" id="loginBtn">Iniciar Sesión</button>
                 <div id="loginMessage" class="message"></div>
+
+                <button id="googleSignInBtn" class="btn btn-google">
+                    <i class="fab fa-google"></i> Google
+                </button>
+        
+                <button id="githubSignInBtn" class="btn btn-github">
+                    <i class="fab fa-github"></i> GitHub
+                </button>
+        
+                <button id="microsoftSignInBtn" class="btn btn-microsoft">
+                    <i class="fab fa-microsoft"></i> Microsoft
+                </button>
             </form>
              <p style="text-align: center; margin-top: 20px;">¿No tienes cuenta? <button class="nav-link" data-target="register-page">Regístrate aquí</button></p>
         </section>
@@ -550,11 +562,17 @@
              </div>
          </section>
 
-
+         <footer>
+            <div class="footer-content">
+                <p>&copy; 2025 Coding Study Group - Todos los derechos reservados.</p>
+                <div class="social-icons">
+                     <a href="https://twitter.com/TuUsuario" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://instagram.com/TuUsuario" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://linkedin.com/company/TuEmpresa" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </footer>
     </div>
-
-    
-
 
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
@@ -600,6 +618,9 @@
 
         // Registro
         const registerForm = document.getElementById('registerForm');
+        const googleSignInBtn = document.getElementById('googleSignInBtn');
+        const githubSignInBtn = document.getElementById('githubSignInBtn');
+        const microsoftSignInBtn = document.getElementById('microsoftSignInBtn');
         const registerEmailInput = document.getElementById('registerEmail');
         const registerPasswordInput = document.getElementById('registerPassword');
         const registerConfirmPasswordInput = document.getElementById('registerConfirmPassword');
@@ -612,6 +633,34 @@
         const loginPasswordInput = document.getElementById('loginPassword');
         const loginBtn = document.getElementById('loginBtn');
         const loginMessageDiv = document.getElementById('loginMessage');
+
+        // Inicio de sesión con Google
+        googleSignInBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            signInWithProvider(provider);
+        });
+
+        // Inicio de sesión con GitHub
+        githubSignInBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.GithubAuthProvider();
+            signInWithProvider(provider);
+        });
+
+        // Inicio de sesión con Microsoft
+        microsoftSignInBtn.addEventListener('click', () => {
+            const provider = new firebase.auth.OAuthProvider('microsoft.com');
+            signInWithProvider(provider);
+        });
+
+        // Función genérica para proveedores OAuth
+        function signInWithProvider(provider) {
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    window.location.href = 'index.html';
+                }).catch((error) => {
+                    showMessage(error.message, 'error');
+                });
+        }
 
         // Dashboard
         const dashboardWelcomeMessageDiv = document.getElementById('dashboardWelcomeMessage');
@@ -1442,16 +1491,6 @@ int main() {
 
 
     </script>
-    <footer>
-        <div class="footer-content">
-            <p>&copy; 2025 Coding Study Group - Todos los derechos reservados.</p>
-            <div class="social-icons">
-                 <a href="https://twitter.com/TuUsuario" target="_blank"><i class="fab fa-twitter"></i></a>
-                <a href="https://instagram.com/TuUsuario" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://linkedin.com/company/TuEmpresa" target="_blank"><i class="fab fa-linkedin"></i></a>
-            </div>
-        </div>
-    </footer>
 
     </body>
 </html>
