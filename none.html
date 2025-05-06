@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargando Aplicación</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-size: 1.2em;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <p>Cargando aplicación y verificando estado de sesión...</p>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <script>
+        // ** IMPORTANTE: REEMPLAZA ESTE OBJETO con la configuración de tu proyecto Firebase **
+        // Debe ser la misma configuración que usarás en principal.html
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPGfI248M3JM12_UC9n8pSc3EQdgnxyp8", // <-- Tus credenciales REALES
+            authDomain: "coding-study-group.firebaseapp.com",
+            projectId: "coding-study-group",
+            storageBucket: "coding-study-group.firebasestorage.app",
+            messagingSenderId: "758696967653",
+            appId: "1:758696967653:web:14a25dec60cf2cf05e830c",
+            measurementId: "G-M39CBKCHXX"
+        };
+
+        try {
+            firebase.initializeApp(firebaseConfig);
+            const auth = firebase.auth();
+
+            console.log("Index: Firebase inicializado, verificando sesión...");
+
+            // No necesitamos el user object aquí, solo saber si la verificación termina.
+            // Siempre redirigimos a principal.html, y principal.html manejará qué mostrar.
+            auth.onAuthStateChanged(() => {
+                 console.log("Index: Verificación de sesión completa. Redirigiendo a principal.html");
+                 // Redirige a principal.html
+                 window.location.href = 'principal.html'; // Asegúrate que el nombre sea correcto
+            });
+
+        } catch (error) {
+            console.error("Index: Error inicializando Firebase para verificación:", error);
+            document.body.innerHTML = '<p style="color: red;">Error crítico al cargar. Consulta la consola.</p>';
+        }
+    </script>
+</body>
+</html>

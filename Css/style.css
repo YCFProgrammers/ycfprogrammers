@@ -40,19 +40,7 @@ nav ul {
     gap: 10px;
 }
 
-nav a {
-    text-decoration: none;
-    color: white;
-    background-color: #0047ab;
-    padding: 10px 20px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-}
 
-nav a:hover {
-    background-color: orange;
-    cursor: pointer;
-}
 
 .hero {
     padding: 40px 20px;
@@ -75,16 +63,7 @@ h2 {
     text-align: center;
  }
 
-.button-cate {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #0066ff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
 
-}
 .boton-enfoque {
     text-align: center;
 }
@@ -143,16 +122,7 @@ footer {
     position: relative;
 }
 
-/* Estilos Desplegable Categorías de Estudio */
-.dropdown-button {
-    background-color: #0047ab;
-    margin-top: -15px;
-    color: rgb(255, 255, 255);
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
+
 
 
 .dropdown-button:hover {
