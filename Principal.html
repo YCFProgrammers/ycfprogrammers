@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Study Group - App</title>
+    <link rel="stylesheet" href="/Css/style_index.css">
+    <link rel="icon" href="/img/icono_server.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* --- Estilos Adicionales para SPA (Integrar en style_index.css si posible) --- */
+        /* Estos estilos DEBERÍAN idealmente integrarse en style_index.css */
+        /* Pero los incluimos aquí para tener un solo archivo principal funcional */
+
+        body {
+             /* Ajustar estilos generales si style_index.css es muy diferente */
+             font-family: 'Poppins', sans-serif; /* Usar la fuente importada */
+             background-color: #121212; /* Fondo oscuro */
+             color: #e0e0e0; /* Texto gris claro */
+             display: flex;
+             justify-content: center;
+             align-items: flex-start;
+             min-height: 100vh;
+             margin: 0; /* Asegurar margen cero */
+             padding: 0; /* Asegurar padding cero en body */
+             box-sizing: border-box;
+         }
+
+        .container {
+            background-color: #1e1e1e; /* Contenedor oscuro */
+            padding: 0; /* El padding se pondrá dentro de las secciones */
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            width: 800px; /* Ajusta el ancho si es necesario */
+            max-width: 100%;
+            text-align: left;
+            margin-top: 0; /* El margen superior puede gestionarse con padding-top en body o margen en secciones */
+             /* Eliminar estilos de padding/margin/border si ya están en style_index.css */
+        }
+
+        header {
+             background-color: #282828; /* Fondo del header */
+             padding: 10px 20px; /* Padding interno */
+             border-bottom: 1px solid #00cc99; /* Borde inferior de acento */
+             display: flex;
+             justify-content: space-between; /* Logo a la izquierda, nav a la derecha */
+             align-items: center; /* Centrar verticalmente */
+             flex-wrap: wrap; /* Permite que los elementos se envuelvan en pantallas pequeñas */
+             position: sticky; /* Header fijo en la parte superior */
+             top: 0;
+             z-index: 1000; /* Asegura que esté por encima del contenido */
+        }
+
+        .logo-container {
+             display: flex;
+             align-items: center;
+        }
+        .logo-container .logo {
+             height: 40px; /* Altura del logo */
+             margin-right: 10px;
+        }
+         header h1 {
+             color: #e0e0e0; /* Color del título del logo */
+             font-size: 1.5em;
+             margin: 0; /* Eliminar margen por defecto */
+         }
+
+        nav ul {
+             list-style: none;
+             padding: 0;
+             margin: 0;
+             display: flex; /* Elementos en línea */
+             align-items: center;
+        }
+        nav ul li {
+             margin: 0 10px; /* Espacio entre elementos de la nav */
+             padding: 0; /* Resetear padding de li general */
+             border: none; /* Resetear borde de li general */
+             background: none; /* Resetear fondo de li general */
+        }
+        nav ul li:last-child {
+             margin-right: 0;
+        }
+         nav a {
+             color: #e0e0e0; /* Color de los enlaces de la nav */
+             text-decoration: none;
+             font-weight: 500; /* Peso de la fuente */
+             transition: color 0.3s ease;
+             display: flex; /* Permite alinear icono y texto */
+             align-items: center;
+         }
+         nav a i {
+             margin-right: 5px; /* Espacio entre icono y texto */
+         }
+        nav a:hover {
+             color: #00cc99; /* Color al pasar el ratón */
+        }
+
+
+        h2 { margin: 15px 0 25px 0; color: #00cc99; text-align: center; font-size: 1.8em; }
+        h3 { margin: 25px 0 15px 0; color: #00cc99; border-bottom: 1px solid #333; padding-bottom: 5px; font-size: 1.3em; }
+
+        /* Estilo para ocultar secciones de página */
+        .page-section {
+            display: none; /* Todas las secciones de página estarán ocultas por defecto */
+            padding: 20px; /* Padding interno de cada sección */
+            margin-bottom: 0; /* Sin margen inferior */
+        }
+         /* La sección actualmente activa se mostrará */
+        .page-section.active {
+            display: block;
+        }
+
+        /* --- Estilos de Formularios y Botones --- */
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 5px; font-weight: bold; color: #cccccc; font-size: 0.9em; }
+        input[type="text"], input[type="email"], input[type="password"], textarea, select {
+             width: calc(100% - 18px); padding: 8px; background-color: #333; border: 1px solid #555; border-radius: 4px; color: #ffffff; box-sizing: border-box; font-size: 0.9em;
+        }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus, select:focus {
+             outline: none; border-color: #00cc99; box-shadow: 0 0 5px rgba(0, 204, 153, 0.5); background-color: #2a2a2a;
+        }
+        button {
+             /* Asegurar que los estilos de botón sean consistentes */
+             background-color: #00cc99; color: #1a1a1a; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer; font-size: 1em; transition: background-color 0.3s ease; margin-top: 10px;
+        }
+        button:hover { background-color: #00b386; }
+        button:disabled { background-color: #555; cursor: not-allowed; }
+
+        /* --- Estilos de Listas --- */
+        ul { margin-top: 15px; padding: 0; list-style: none; }
+        ul li { background-color: #2a2a2a; padding: 12px; margin-bottom: 10px; border-radius: 6px; border: 1px solid #444; }
+        ul li:last-child { margin-bottom: 0; }
+
+        ul li h4 { margin-top: 0; margin-bottom: 5px; color: #00cc99; font-size: 1.1em; }
+        ul li p { margin-bottom: 5px; color: #cccccc; font-size: 0.9em; line-height: 1.4; }
+        ul li .item-meta { font-size: 0.8em; color: #888; display: block; margin-top: 3px; }
+
+        /* --- Mensajes de Estado --- */
+        .message { margin-top: 15px; padding: 10px; border-radius: 4px; font-size: 0.9em; text-align: center; }
+        .message.success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .message.error { background-color: #f8d7da; color: #721c24; border: 1px solid #721c24; }
+        .message.info { background-color: #cce5ff; color: #004085; border: 1px solid #004085; }
+        .message:empty { display: none; }
+
+        /* --- Estilos Específicos de SPA --- */
+        #loading-page {
+             text-align: center;
+             font-size: 1.2em;
+             padding: 50px 0;
+        }
+         #loading-page p { margin: 0; } /* Eliminar margen por defecto */
+
+
+        /* Estilos para enlaces de navegación SPA (botones sin estilo de botón por defecto) */
+        .nav-link { /* Clase base para todos los elementos que activan navegación SPA */
+            cursor: pointer;
+            color: #00cc99; /* Color de acento */
+            text-decoration: none;
+            background: none;
+            border: none;
+            padding: 0 5px;
+            margin: 0 5px;
+            transition: color 0.3s ease, text-decoration 0.3s ease;
+            display: inline-block;
+        }
+         .nav-link:hover {
+             color: #00b386;
+             text-decoration: underline;
+         }
+         /* Ajustes específicos para enlaces en la navegación principal */
+         header .nav-links button.nav-link {
+             font-size: 1em;
+             padding: 5px 10px; /* Añadir padding para área clickeable en nav */
+             margin: 0;
+             display: flex; /* Alinear icono y texto */
+             align-items: center;
+             color: #e0e0e0; /* Color de los enlaces de la nav */
+         }
+         header .nav-links button.nav-link:hover {
+             color: #00cc99; /* Color al pasar el ratón */
+             text-decoration: none; /* Quitar subrayado en nav hover */
+         }
+          header .nav-links button.nav-link i {
+              margin-right: 5px;
+          }
+
+
+         /* Estilo para el dropdown */
+         .dropdown { position: relative; display: inline-block; }
+          /* Estilo para el botón/enlace que abre el dropdown */
+          .dropdown-toggle {
+             /* Reutiliza estilos de nav-link button */
+              display: flex;
+              align-items: center;
+          }
+          .dropdown-toggle i { margin-left: 5px; margin-right: 0; } /* Icono de flecha */
+
+         .dropdown-menu {
+             display: none;
+             position: absolute;
+             top: 100%; /* Debajo del botón principal */
+             right: 0; /* Alinear a la derecha si el menú está cerca del borde derecho */
+             background-color: #282828; /* Fondo del menú desplegable */
+             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+             z-index: 1001; /* Asegura que esté por encima de otros elementos */
+             min-width: 180px; /* Ancho mínimo */
+             border-radius: 4px;
+             padding: 5px 0;
+         }
+         .dropdown-menu li {
+             padding: 0;
+             margin: 0;
+             border-bottom: none;
+             background: none;
+         }
+         .dropdown-menu li button.nav-link { /* Estilo para items dentro del dropdown */
+             color: #e0e0e0;
+             padding: 8px 15px; /* Padding clickeable */
+             text-decoration: none;
+             display: block;
+             background: none;
+             border: none;
+             width: 100%;
+             text-align: left;
+             box-sizing: border-box;
+             margin: 0; /* Resetear margen */
+             font-size: 0.9em; /* Tamaño de fuente más pequeño */
+         }
+         .dropdown-menu li button.nav-link i {
+              margin-right: 8px; /* Espacio para iconos si los tienen */
+              margin-left: 0;
+         }
+
+         .dropdown-menu li button.nav-link:hover {
+             background-color: #333; /* Fondo al pasar el ratón */
+             color: #00cc99;
+         }
+          /* Mostrar dropdown al pasar el ratón sobre el contenedor dropdown */
+         .dropdown:hover .dropdown-menu {
+             display: block;
+         }
+
+         /* Estilo para botón de volver */
+         .back-link {
+             display: inline-block;
+             margin-bottom: 20px;
+             /* Reutiliza estilos de .nav-link */
+             padding: 0;
+             margin: 0; /* Ajuste si es necesario */
+         }
+
+
+        /* --- Estilos específicos del Landing Page --- */
+         #landing-page .hero {
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             flex-wrap: wrap; /* Permite que se apilen en pantallas pequeñas */
+             padding: 40px 0;
+             border-bottom: 1px solid #2a2a2a;
+         }
+         #landing-page .hero-content {
+              flex: 1; /* Ocupa el espacio disponible */
+              min-width: 300px; /* Ancho mínimo antes de envolver */
+              margin-right: 20px;
+         }
+          #landing-page .hero-image {
+              flex: 0 0 250px; /* Tamaño fijo */
+              text-align: center;
+          }
+           #landing-page .hero-image .server-icon {
+               max-width: 100%;
+               height: auto;
+           }
+         #landing-page .intro-container {
+             margin-top: 20px;
+         }
+         #landing-page .intro-container p {
+             margin-bottom: 10px;
+             line-height: 1.6;
+             color: #cccccc;
+         }
+          #landing-page .intro-container p.highlight {
+             color: #00cc99;
+             font-weight: bold;
+             font-size: 1.1em;
+          }
+
+          #landing-page .one {
+              padding: 40px 0;
+              border-bottom: 1px solid #2a2a2a;
+              text-align: center;
+          }
+           #landing-page .one img {
+               max-width: 100%;
+               height: auto;
+               margin-top: 20px;
+           }
+           #landing-page .boton-enfoque {
+               margin-top: 30px;
+           }
+            #landing-page .boton-enfoque button.button-cate {
+                margin: 0 auto;
+                display: block;
+            }
+
+          #landing-page .buttons {
+              padding: 40px 0;
+              text-align: center;
+          }
+           #landing-page .buttons button {
+               margin: 0 10px;
+           }
+
+
+        /* --- Placeholders de Contenido Dinámico --- */
+        .placeholder-content { font-style: italic; color: #888; margin-top: 10px; padding: 10px; background-color: #252525; border-left: 3px solid #00cc99 }
+        </style>
+            </head> 
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="/img/icono_server.png" alt="Logo" class="logo">
+                <h1>Coding Study Group</h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><button class="nav-link" data-target="landing-page"><i class="fas fa-home"></i> Inicio</button></li>
+
+                    <li>
+                        <button class="nav-link" id="navAuthLink" data-target="login-page"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</button>
+                         </li>
+
+                    <li class="dropdown">
+                         <button class="nav-link dropdown-toggle"><i class="fas fa-book"></i> Categorías <i class="fas fa-chevron-down"></i></button>
+                         <ul class="dropdown-menu">
+                             <li><button class="nav-link" data-target="content-page" data-topic-id="cpp"><i class="fas fa-code"></i> C++</button></li>
+                             <li><button class="nav-link" data-target="content-page" data-topic-id="python"><i class="fas fa-code"></i> Python</button></li>
+                             <li><button class="nav-link" data-target="content-page" data-topic-id="java"><i class="fas fa-code"></i> Java</button></li>
+                             <li><button class="nav-link" data-target="content-page" data-topic-id="ios"><i class="fas fa-mobile-alt"></i> Ios</button></li>
+                             <li><button class="nav-link" data-target="content-page" data-topic-id="databases"><i class="fas fa-database"></i> Base de datos</button></li>
+                             <li><button class="nav-link" data-target="content-page" data-topic-id="web-dev"><i class="fas fa-code"></i> Desarrollo Web</button></li>
+                             <li><button class="nav-link" data-target="content-page" data-topic-id="photoshop"><i class="fas fa-image"></i> Diseño Photoshop</button></li>
+                             <li><button class="nav-link" data-target="content-page" data-topic-id="ai"><i class="fas fa-brain"></i> Inteligencia Artificial</button></li>
+                             <li><button class="nav-link" data-target="content-page" data-topic-id="data-science"><i class="fas fa-chart-bar"></i> Ciencia de Datos</button></li>
+                             <li><button class="nav-link" data-target="content-page" data-topic-id="ui-ux"><i class="fas fa-paint-brush"></i> Diseño UI/UX</button></li>
+                             <li><button class="nav-link" data-target="content-page" data-topic-id="gamedev"><i class="fas fa-gamepad"></i> Videojuegos</button></li>
+                             <li><button class="nav-link" data-link" data-target="content-page" data-topic-id="english"><i class="fas fa-language"></i> Inglés</button></li>
+                              <li><button class="nav-link" data-target="dashboard-page"><i class="fas fa-project-diagram"></i> Proyectos</button></li>
+                              <li><button class="nav-link" data-target="content-page" data-topic-id="exercises"><i class="fas fa-dumbbell"></i> Ejercicios</button></li>
+                         </ul>
+                     </li>
+                      <li><button class="nav-link" data-target="dashboard-page" id="navDashboardLink" style="display:none;"><i class="fas fa-tachometer-alt"></i> Dashboard</button></li>
+                </ul>
+            </nav>
+        </header>
+
+        <section id="loading-page" class="page-section active">
+             <p id="loading-status">Cargando aplicación y verificando sesión...</p>
+        </section>
+
+        <section id="landing-page" class="page-section">
+             <section class="hero">
+                 <div class="hero-content">
+                     <h2>¿Qué es Coding Study Group?</h2>
+                     <div class="intro-container">
+                         <p>Somos una comunidad apasionada por la programación que se reúne todos los días para aprender, compartir conocimientos y crecer juntos.</p>
+                         <p>Nos enfocamos en diferentes áreas como <strong>Desarrollo Web, Ciencia de Datos, Diseño UI/UX, Inteligencia Artificial y Videojuegos</strong>.</p>
+                         <p>Nuestro objetivo es impulsar el aprendizaje colaborativo, construir proyectos reales y apoyar tanto a principiantes como a programadores avanzados.</p>
+                         <p class="highlight">¡Únete a un espacio donde cada línea de código se escribe en equipo!</p>
+                     </div>
+                 </div>
+                 <div class="hero-image">
+                     <img src="/img/icono_server.png" alt="Icono del servidor" class="server-icon">
+                 </div>
+             </section>
+
+             <section class="one" style="border-bottom: none; margin-bottom: 0;">
+                 <h2>Enfoques Principales</h2>
+                 <div class="contenedor" style="text-align: center;">
+                     <img src="/img/enfoques.png" alt="enfoques" style="max-width: 100%; height: auto;">
+                 </div>
+                 <div class="boton-enfoque" style="text-align: center; margin-top: 30px;">
+                      <button class="button-cate nav-link" data-target="content-page" style="margin: 0 auto; display: block;">Explorar Contenido (Ver Categorías)</button>
+                      <p style="text-align: center; margin-top: 20px;">O <button class="nav-link" data-target="register-page">Regístrate</button> / <button class="nav-link" data-target="login-page">Inicia Sesión</button> para unirte a la comunidad.</p>
+                 </div>
+             </section>
+
+             <section class="buttons" style="text-align: center; margin-top: 30px; border-bottom: none; padding-bottom: 0; margin-bottom: 0;">
+                  <button class="discord-btn" onclick="window.open('https://discord.gg/4gHTPrhz', '_blank')">
+                     <i class="fab fa-discord"></i> Unirse al Discord
+                 </button>
+                 <button class="github-btn" onclick="window.open('https://github.com/Coding-Study-Group', '_blank')">
+                     <i class="fab fa-github"></i> Ver en GitHub
+                 </button>
+             </section>
+         </section>
+
+
+        <section id="register-page" class="page-section">
+            <h2>Registro de Usuario</h2>
+            <form id="registerForm">
+                <div class="form-group">
+                    <label for="registerEmail">Email:</label>
+                    <input type="email" id="registerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Contraseña:</label>
+                    <input type="password" id="registerPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirmar Contraseña:</label>
+                    <input type="password" id="registerConfirmPassword" required>
+                </div>
+                <button type="submit" id="registerBtn">Registrar</button>
+                 <div id="registerMessage" class="message"></div>
+            </form>
+             <p style="text-align: center; margin-top: 20px;">¿Ya tienes cuenta? <button class="nav-link" data-target="login-page">Iniciar Sesión aquí</button></p>
+        </section>
+
+        <section id="login-page" class="page-section">
+            <h2>Inicio de Sesión</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña:</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" id="loginBtn">Iniciar Sesión</button>
+                <div id="loginMessage" class="message"></div>
+            </form>
+             <p style="text-align: center; margin-top: 20px;">¿No tienes cuenta? <button class="nav-link" data-target="register-page">Regístrate aquí</button></p>
+        </section>
+
+        <section id="dashboard-page" class="page-section">
+             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 20px;">
+                <h2 style="margin: 0;">Dashboard</h2>
+                <div class="nav-links">
+                     <button class="nav-link" data-target="config-page"><i class="fas fa-cog"></i> Configuración</button>
+                     <button id="signOutBtn" class="nav-link"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</button>
+                </div>
+            </div>
+
+            <div class="welcome-message" id="dashboardWelcomeMessage" style="text-align: center; margin-bottom: 20px; font-size: 1.1em;"></div>
+
+            <section style="border-bottom: 1px solid #2a2a2a; padding-bottom: 15px; margin-bottom: 20px;">
+                <h3>Mi Perfil Rápido</h3>
+                <p><strong>Usuario:</strong> <span id="dashboardProfileInfo">Cargando...</span></p>
+                 <p>Consulta <button class="nav-link" data-target="config-page" style="margin: 0; padding: 0;">Configuración</button> para editar tu perfil completo.</p>
+             </section>
+
+             <section id="createProjectSection" style="border-bottom: 1px solid #2a2a2a; padding-bottom: 15px; margin-bottom: 20px;">
+                <h3>Crear Nuevo Proyecto</h3>
+                <div class="create-project-form">
+                    <div class="form-group">
+                        <label for="projectName">Nombre del Proyecto:</label>
+                        <input type="text" id="projectName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="projectDescription">Descripción:</label>
+                        <textarea id="projectDescription" rows="3" required></textarea>
+                    </div>
+                    <button id="createProjectBtn">Crear Proyecto</button>
+                    <div id="createProjectMessage" class="message"></div>
+                </div>
+            </section>
+
+            <section id="myProjectsSection" style="border-bottom: 1px solid #2a2a2a; padding-bottom: 15px; margin-bottom: 20px;">
+                <h3>Mis Proyectos</h3>
+                <ul id="myProjectsList">
+                    <li>Cargando proyectos...</li>
+                </ul>
+                <div id="myProjectsMessage" class="message"></div>
+            </section>
+
+             <section id="groupMembersSection" style="border-bottom: 1px solid #2a2a2a; padding-bottom: 15px; margin-bottom: 20px;">
+                <h3>Miembros del Grupo</h3>
+                 <ul id="groupMembersList">
+                     <li>Cargando miembros...</li>
+                 </ul>
+                 <div id="groupMembersMessage" class="message"></div>
+                 <div class="placeholder-content">
+                    Aquí se listarán otros miembros del grupo. (Funcionalidad pendiente)
+                 </div>
+             </section>
+
+            </section>
+
+         <section id="config-page" class="page-section">
+             <a href="#" class="back-link nav-link" data-target="dashboard-page">&larr; Volver al Dashboard</a>
+
+             <h2>Configuración</h2>
+
+            <section id="profileSettingsSection" style="border-bottom: 1px solid #2a2a2a; padding-bottom: 15px; margin-bottom: 20px;">
+                <h3>Ajustes de Perfil</h3>
+                <form id="profileSettingsForm">
+                    <div class="form-group">
+                        <label for="configDisplayName">Nombre de Usuario:</label>
+                        <input type="text" id="configDisplayName">
+                    </div>
+                     <div class="form-group">
+                        <label for="configEmail">Email:</label>
+                        <input type="email" id="configEmail" disabled title="El email principal se gestiona a través de Firebase Authentication">
+                    </div>
+                    <div class="form-group">
+                        <label for="configBio">Biografía:</label>
+                        <textarea id="configBio" rows="3"></textarea>
+                    </div>
+                     <div class="form-group">
+                        <label for="configSkills">Habilidades (separadas por coma):</label>
+                        <input type="text" id="configSkills" placeholder="Ej: JavaScript, Python, CSS">
+                    </div>
+
+                    <button type="submit" id="saveProfileSettingsBtn">Guardar Cambios</button>
+                    <div id="profileSettingsMessage" class="message"></div>
+                </form>
+            </section>
+
+            <section id="generalSettingsSection" style="border-bottom: none; padding-bottom: 0; margin-bottom: 0;">
+                 <h3>Ajustes Generales</h3>
+                 <div class="form-group">
+                    <label for="configLanguage">Idioma:</label>
+                    <select id="configLanguage">
+                        <option value="es">Español</option>
+                        <option value="en">English</option>
+                    </select>
+                 </div>
+                  <div class="placeholder-content">
+                    La funcionalidad real de cambio de idioma o tema requeriría implementar internacionalización (i18n) y lógica de CSS/JS más avanzada.
+                </div>
+             </section>
+
+            </section>
+
+        <section id="content-page" class="page-section">
+              <a href="#" class="back-link nav-link" data-target="dashboard-page">&larr; Volver al Dashboard</a>
+
+             <h2 id="content-page-title">Contenido</h2>
+             <div id="content-page-display">
+                 <p>Selecciona un tema del menú "Categorías" para ver su contenido aquí.</p>
+             </div>
+             <div class="placeholder-content" style="margin-top: 20px;">
+                 El contenido mostrado aquí es un ejemplo. Para una aplicación real, cargarías este contenido desde una base de datos (como Firestore) o archivos.
+             </div>
+         </section>
+
+
+    </div>
+
+    
+
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        // ** IMPORTANTE: REEMPLAZA ESTE OBJETO con la configuración de tu proyecto Firebase **
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPGfI248M3JM12_UC9n8pSc3EQdgnxyp8", // <-- Tus credenciales REALES
+            authDomain: "coding-study-group.firebaseapp.com",
+            projectId: "coding-study-group",
+            storageBucket: "coding-study-group.firebasestorage.app",
+            messagingSenderId: "758696967653",
+            appId: "1:758696967653:web:14a25dec60cf2cf05e830c",
+            measurementId: "G-M39CBKCHXX"
+        };
+
+        // Inicializa Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Obtén las instancias
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // --- REFERENCIAS A SECCIONES/PÁGINAS ---
+        const loadingPage = document.getElementById('loading-page');
+        const landingPage = document.getElementById('landing-page'); // Nueva sección para el landing
+        const registerPage = document.getElementById('register-page');
+        const loginPage = document.getElementById('login-page');
+        const dashboardPage = document.getElementById('dashboard-page');
+        const configPage = document.getElementById('config-page');
+        const contentPage = document.getElementById('content-page'); // Sección para contenido de temas
+
+        // Array de todas las secciones de página (excluir header/footer fijos)
+        const allPages = [loadingPage, landingPage, registerPage, loginPage, dashboardPage, configPage, contentPage];
+
+        // --- REFERENCIAS A ELEMENTOS DENTRO DE CADA PÁGINA ---
+        const statusMessageElement = document.getElementById('loading-status'); // Mensaje en la página de carga
+
+        // Nav principal en Header
+        const navAuthLinkButton = document.getElementById('navAuthLink'); // Botón/texto "Iniciar Sesión" o Nombre de Usuario
+        const navDashboardLinkButton = document.getElementById('navDashboardLink'); // Botón "Dashboard" en nav
+
+        // Registro
+        const registerForm = document.getElementById('registerForm');
+        const registerEmailInput = document.getElementById('registerEmail');
+        const registerPasswordInput = document.getElementById('registerPassword');
+        const registerConfirmPasswordInput = document.getElementById('registerConfirmPassword');
+        const registerBtn = document.getElementById('registerBtn');
+        const registerMessageDiv = document.getElementById('registerMessage');
+
+        // Inicio de Sesión
+        const loginForm = document.getElementById('loginForm');
+        const loginEmailInput = document.getElementById('loginEmail');
+        const loginPasswordInput = document.getElementById('loginPassword');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginMessageDiv = document.getElementById('loginMessage');
+
+        // Dashboard
+        const dashboardWelcomeMessageDiv = document.getElementById('dashboardWelcomeMessage');
+        const dashboardProfileInfoSpan = document.getElementById('dashboardProfileInfo');
+        const signOutButton = document.getElementById('signOutBtn'); // Botón de cerrar sesión en dashboard
+        // Elementos del dashboard (copiados de la versión condensada)
+        const projectNameInput = document.getElementById('projectName');
+        const projectDescriptionInput = document.getElementById('projectDescription');
+        const createProjectBtn = document.getElementById('createProjectBtn');
+        const createProjectMessageDiv = document.getElementById('createProjectMessage');
+        const myProjectsListUl = document.getElementById('myProjectsList');
+        const myProjectsMessageDiv = document.getElementById('myProjectsMessage');
+         const groupMembersListUl = document.getElementById('groupMembersList');
+         const groupMembersMessageDiv = document.getElementById('groupMembersMessage');
+
+
+        // Configuración
+        const profileSettingsForm = document.getElementById('profileSettingsForm');
+        const configDisplayNameInput = document.getElementById('configDisplayName');
+        const configEmailInput = document.getElementById('configEmail');
+        const configBioInput = document.getElementById('configBio');
+        const configSkillsInput = document.getElementById('configSkills');
+        const saveProfileSettingsBtn = document.getElementById('saveProfileSettingsBtn');
+        const profileSettingsMessageDiv = document.getElementById('profileSettingsMessage');
+        const configLanguageSelect = document.getElementById('configLanguage');
+
+        // Contenido de Tema
+        const contentPageTitleElement = document.getElementById('content-page-title');
+        const contentPageDisplayElement = document.getElementById('content-page-display');
+
+
+        let currentUser = null; // Para guardar el usuario actual
+
+        // --- CONTENIDO DE LOS TEMAS (SIMULADO EN JS) ---
+        // En una aplicación real, esto vendría de Firestore, una API, o archivos estáticos
+        const topicContents = {
+            'cpp': {
+                title: 'Curso Básico de C++',
+                htmlContent: `
+                    <h4>Introducción a C++</h4>
+                    <p>C++ es un lenguaje de programación potente y eficiente, muy utilizado en desarrollo de sistemas, videojuegos, y aplicaciones de alto rendimiento. Es una extensión del lenguaje C.</p>
+                    <h5>Primer Programa: "Hola Mundo"</h5>
+                    <pre><code>#include <iostream>
+
+int main() {
+    std::cout << "¡Hola Mundo desde C++!";
+    return 0;
+}</code></pre>
+                    <p>Este código incluye la librería iostream para entrada/salida, define la función principal <code>main</code>, e imprime texto en la consola.</p>
+                    <h5>Conceptos Clave</h5>
+                    <ul>
+                        <li>Variables y Tipos de Datos</li>
+                        <li>Estructuras de Control (if, for, while)</li>
+                        <li>Funciones</li>
+                        <li>Programación Orientada a Objetos (Clases, Objetos, Herencia, Polimorfismo)</li>
+                        <li>Punteros y Gestión de Memoria</li>
+                    </ul>
+                    <p>Para compilar y ejecutar, necesitas un compilador como g++.</p>
+                     <p class="item-meta">Explora más recursos externos para profundizar en C++.</p>
+                `
+            },
+            'python': {
+                title: 'Introducción a Python',
+                htmlContent: `
+                    <h4>¿Por qué Python?</h4>
+                    <p>Python es conocido por su sintaxis clara y legible, lo que lo hace ideal para principiantes. Es versátil y se usa en desarrollo web, ciencia de datos, inteligencia artificial, automatización y más.</p>
+                    <h5>Tu Primer Script:</h5>
+                    <pre><code>print("¡Hola Pythonista!")</code></pre>
+                    <p>Así de simple es imprimir en Python.</p>
+                    <h5>Características Principales</h5>
+                    <ul>
+                        <li>Tipado Dinámico</li>
+                        <li>Gran Colección de Librerías Estándar y de Terceros (NumPy, Pandas, Django, Flask)</li>
+                        <li>Comunidad Activa</li>
+                        <li>Soporte Multiplataforma</li>
+                    </ul>
+                    <p>Puedes ejecutar código Python directamente en la consola o guardar scripts en archivos .py.</p>
+                     <p class="item-meta">Considera instalar Anaconda o Miniconda para gestionar entornos y paquetes.</p>
+                `
+            },
+            'java': {
+                 title: 'Fundamentos del Lenguaje Java',
+                 htmlContent: `
+                     <h4>Java: Write Once, Run Anywhere</h4>
+                     <p>Java es un lenguaje de programación orientado a objetos diseñado para ser portable. Su lema "Escribe una vez, ejecuta en cualquier lugar" se basa en la Máquina Virtual de Java (JVM), que permite que el código compilado (bytecode) se ejecute en cualquier dispositivo con JVM.</p>
+                     <h5>Clase Ejemplo:</h5>
+                     <pre><code>public class HolaJava {
+    public static void main(String[] args) {
+        System.out.println("¡Hola Java!");
+    }
+}</code></pre>
+                     <p>Java es fuertemente tipado y requiere una estructura de clases.</p>
+                     <h5>Conceptos Clave de Java</h5>
+                     <ul>
+                         <li>Clases, Objetos e Interfaces</li>
+                         <li>Herencia y Polimorfismo</li>
+                         <li>Manejo de Excepciones</li>
+                         <li>Threads (Multihilo)</li>
+                         <li>APIs Estándar (Collections, Streams, etc.)</li>
+                     </ul>
+                     <p>Necesitas el JDK (Java Development Kit) para compilar (javac) y ejecutar (java) código.</p>
+                      <p class="item-meta">Los IDEs como Eclipse o IntelliJ IDEA son muy útiles para desarrollar en Java.</p>
+                 `
+            },
+             'ios': {
+                 title: 'Desarrollo de Aplicaciones iOS',
+                 htmlContent: `
+                     <h4>Introducción a iOS con Swift</h4>
+                     <p>El desarrollo de aplicaciones para iPhone, iPad y otros dispositivos Apple se realiza principalmente con el lenguaje Swift y el entorno de desarrollo Xcode.</p>
+                     <h5>Elementos Esenciales</h5>
+                     <ul>
+                         <li>Lenguaje Swift (o Objective-C, aunque Swift es el moderno)</li>
+                         <li>Xcode IDE</li>
+                         <li>UIKit o SwiftUI (frameworks de UI)</li>
+                         <li>Interface Builder (para diseñar interfaces visualmente)</li>
+                         <li>App Store Connect (para distribuir apps)</li>
+                     </ul>
+                     <p>Requiere un Mac para usar Xcode. SwiftUI es el framework más reciente y declarativo para construir interfaces de usuario en todas las plataformas de Apple.</p>
+                      <p class="item-meta">La documentación oficial de Apple Developer es el mejor recurso.</p>
+                 `
+             },
+             'databases': {
+                 title: 'Conceptos de Bases de Datos',
+                 htmlContent: `
+                     <h4>Modelos y Sistemas de Bases de Datos</h4>
+                     <p>Las bases de datos son sistemas organizados para almacenar, gestionar y recuperar datos. Existen diferentes tipos y modelos.</p>
+                     <h5>Tipos Comunes</h5>
+                     <ul>
+                         <li>**Relacionales (SQL):** Datos organizados en tablas con filas y columnas. Ej: MySQL, PostgreSQL, SQLite, SQL Server.</li>
+                         <li>**NoSQL:** Modelos más flexibles (documentos, clave-valor, grafos). Ej: MongoDB, Cassandra, Redis, Firebase Firestore.</li>
+                     </ul>
+                     <h5>Operaciones Fundamentales (CRUD)</h5>
+                     <ul>
+                         <li>Create (Crear registros)</li>
+                         <li>Read (Leer/Consultar registros)</li>
+                         <li>Update (Actualizar registros)</li>
+                         <li>Delete (Eliminar registros)</li>
+                     </ul>
+                      <p class="item-meta">Comprender SQL es fundamental para bases de datos relacionales.</p>
+                 `
+             },
+              'web-dev': {
+                  title: 'Desarrollo Web: Frontend y Backend',
+                  htmlContent: `
+                      <h4>Construyendo la Web Moderna</h4>
+                      <p>El desarrollo web abarca la creación de sitios y aplicaciones que se ejecutan en navegadores. Se divide principalmente en Frontend (lo que el usuario ve e interactúa) y Backend (la lógica del servidor y la base de datos).</p>
+                      <h5>Frontend (Cliente)</h5>
+                      <ul>
+                          <li>HTML (Estructura)</li>
+                          <li>CSS (Estilo)</li>
+                          <li>JavaScript (Interactividad)</li>
+                          <li>Frameworks/Librerías: React, Vue, Angular, Svelte, etc.</li>
+                      </ul>
+                       <h5>Backend (Servidor)</h5>
+                       <ul>
+                           <li>Lenguajes: Python (Django, Flask), Node.js (JavaScript), Java (Spring), Ruby (Rails), PHP (Laravel), Go, C#, etc.</li>
+                           <li>Frameworks: Express (Node), Django (Python), Spring (Java), etc.</li>
+                           <li>Bases de Datos: PostgreSQL, MySQL, MongoDB, Firestore, etc.</li>
+                           <li>Servidores: Apache, Nginx, IIS.</li>
+                       </ul>
+                       <p class="item-meta">Full-stack development implica trabajar en ambos lados.</p>
+                  `
+              },
+               'photoshop': {
+                   title: 'Diseño con Photoshop (Conceptos)',
+                   htmlContent: `
+                       <h4>Introducción al Diseño Gráfico Digital</h4>
+                       <p>Adobe Photoshop es el software estándar de la industria para edición de imágenes y manipulación de fotos. Es fundamental para diseño gráfico, retoque fotográfico y arte digital.</p>
+                       <h5>Herramientas Esenciales</h5>
+                       <ul>
+                           <li>Capas (Layers): Permiten trabajar con elementos individuales.</li>
+                           <li>Herramientas de Selección (Marquee, Lasso, Magic Wand).</li>
+                           <li>Herramientas de Edición (Brush, Eraser, Clone Stamp).</li>
+                           <li>Ajustes y Filtros.</li>
+                       </ul>
+                        <p>Aunque es principalmente para imágenes raster (basadas en píxeles), tiene algunas capacidades vectoriales.</p>
+                       <p class="item-meta">Combinar Photoshop con Illustrator (vectorial) y otros programas de Adobe es común en flujos de trabajo profesionales.</p>
+                   `
+               },
+                'ai': {
+                    title: 'Inteligencia Artificial y Machine Learning',
+                    htmlContent: `
+                        <h4>Aprendizaje de las Máquinas</h4>
+                        <p>La Inteligencia Artificial (IA) es un campo de la informática que busca crear sistemas capaces de realizar tareas que normalmente requieren inteligencia humana. El Machine Learning (ML) es un subcampo de la IA que se enfoca en desarrollar algoritmos que permiten a las computadoras aprender de datos.</p>
+                        <h5>Áreas de la IA</h5>
+                        <ul>
+                            <li>Machine Learning (Aprendizaje Automático)</li>
+                            <li>Deep Learning (Aprendizaje Profundo)</li>
+                            <li>Procesamiento del Lenguaje Natural (PLN)</li>
+                            <li>Visión por Computadora</li>
+                            <li>Robótica</li>
+                        </ul>
+                        <h5>Frameworks Comunes</h5>
+                        <ul>
+                            <li>TensorFlow</li>
+                            <li>PyTorch</li>
+                            <li>Scikit-learn</li>
+                        </ul>
+                         <p>Python es el lenguaje más popular en IA/ML.</p>
+                        <p class="item-meta">Requiere una buena base en matemáticas y estadística.</p>
+                    `
+                },
+                 'data-science': {
+                     title: 'Ciencia de Datos',
+                     htmlContent: `
+                         <h4>Analizando Datos para Tomar Decisiones</h4>
+                         <p>La Ciencia de Datos es un campo interdisciplinario que utiliza métodos científicos, procesos, algoritmos y sistemas para extraer conocimiento e ideas a partir de datos en diversas formas, tanto estructuradas como no estructuradas.</p>
+                         <h5>Ciclo de Vida de la Ciencia de Datos</h5>
+                         <ul>
+                             <li>Recopilación de Datos</li>
+                             <li>Limpieza y Preprocesamiento</li>
+                             <li>Análisis Exploratorio (EDA)</li>
+                             <li>Modelado (Machine Learning, Estadística)</li>
+                             <li>Visualización</li>
+                             <li>Comunicación de Resultados</li>
+                             <li>Implementación</li>
+                         </ul>
+                          <p>Herramientas y Lenguajes Clave: Python (Pandas, NumPy, Matplotlib, Seaborn), R, SQL, Jupyter Notebooks.</p>
+                         <p class="item-meta">Es fundamental tener una comprensión sólida de estadística y dominar herramientas de visualización.</p>
+                     `
+                 },
+                  'ui-ux': {
+                      title: 'Diseño UI/UX',
+                      htmlContent: `
+                          <h4>Creando Experiencias Digitales Atractivas y Usables</h4>
+                          <p>El Diseño UI (User Interface - Interfaz de Usuario) se centra en la apariencia y la interactividad de la interfaz de un producto digital. El Diseño UX (User Experience - Experiencia de Usuario) se enfoca en cómo se siente el usuario al interactuar con el producto, buscando que sea eficiente y agradable.</p>
+                          <h5>Componentes Clave</h5>
+                          <ul>
+                              <li>**UI:** Layouts, elementos visuales (botones, iconos, tipografía, colores), animaciones.</li>
+                              <li>**UX:** Investigación de usuarios, arquitectura de información, flujos de usuario, prototipado, pruebas de usabilidad.</li>
+                          </ul>
+                           <p>Herramientas: Figma, Sketch, Adobe XD, InVision.</p>
+                          <p class="item-meta">La colaboración entre diseñadores UI/UX, desarrolladores y stakeholders es crucial.</p>
+                      `
+                  },
+                   'gamedev': {
+                       title: 'Desarrollo de Videojuegos',
+                       htmlContent: `
+                           <h4>Dando Vida a Mundos Interactivos</h4>
+                           <p>El desarrollo de videojuegos es un campo complejo que involucra programación, diseño gráfico, diseño de sonido, narrativa y más. Puede ir desde juegos móviles simples hasta producciones AAA.</p>
+                           <h5>Motores Populares</h5>
+                           <ul>
+                               <li>Unity (C#, muy versátil, 2D/3D)</li>
+                               <li>Unreal Engine (C++, visual scripting Blueprint, AAA)</li>
+                               <li>Godot Engine (GDScript, Python-like, 2D/3D, open source)</li>
+                               <li>GameMaker Studio (GML, 2D)</li>
+                           </ul>
+                            <p>Roles Comunes: Programador de Jugabilidad, Artista 3D, Diseñador de Niveles, Diseñador de Sonido, Tester, Productor.</p>
+                           <p class="item-meta">Empieza con proyectos pequeños y sencillos.</p>
+                       `
+                   },
+                    'english': {
+                        title: 'Inglés para Programadores',
+                        htmlContent: `
+                            <h4>Dominando el Idioma de la Industria</h4>
+                            <p>El inglés es el idioma predominante en la documentación, tutoriales, foros, y herramientas de desarrollo de software. Mejorar tus habilidades en inglés abrirá muchas puertas en tu carrera de programación.</p>
+                            <h5>Áreas de Enfoque</h5>
+                            <ul>
+                                <li>Comprensión Lectora (documentación técnica, blogs)</li>
+                                <li>Comprensión Auditiva (tutoriales en video, podcasts, charlas)</li>
+                                <li>Expresión Escrita (documentación de código, emails profesionales)</li>
+                                <li>Expresión Oral (reuniones de equipo, entrevistas)</li>
+                            </ul>
+                             <p>Recursos: Documentación oficial, Stack Overflow, YouTube (canales educativos en inglés), libros técnicos, cursos en línea.</p>
+                            <p class="item-meta">Practica la lectura de código con comentarios en inglés.</p>
+                        `
+                    },
+                     'exercises': {
+                         title: 'Ejercicios de Práctica',
+                         htmlContent: `
+                             <h4>Pon a Prueba tus Habilidades</h4>
+                             <p>La práctica constante es crucial para convertirte en un buen programador. Resolver ejercicios te ayuda a consolidar conceptos y mejorar tu lógica y capacidad de resolución de problemas.</p>
+                             <h5>Plataformas Recomendadas</h5>
+                             <ul>
+                                 <li>LeetCode</li>
+                                 <li>HackerRank</li>
+                                 <li>CodeWars</li>
+                                 <li>Edabit</li>
+                                 <li>Codificación en tu propio editor o IDE</li>
+                             </ul>
+                             <p>Intenta resolver problemas en diferentes lenguajes y estructuras de datos.</p>
+                             <p class="item-meta">No te rindas si un problema es difícil. Busca pistas o soluciones después de intentarlo.</p>
+                         `
+                     }
+            // Añade aquí más temas según tus archivos HTML originales
+            // 'otro-tema': { title: 'Título del Otro Tema', htmlContent: '<p>Contenido del otro tema...</p>' },
+        };
+
+
+        // --- FUNCIÓN PARA MOSTRAR UNA PÁGINA OCULTANDO LAS OTRAS ---
+        // ... (Esta función es la misma que en el código anterior) ...
+         function showPage(pageElement) {
+            console.log("Mostrando página:", pageElement.id);
+            allPages.forEach(page => {
+                page.classList.remove('active');
+            });
+            pageElement.classList.add('active');
+
+             // Limpiar mensajes de estado al cambiar de página (opcional)
+            const messages = pageElement.querySelectorAll('.message');
+            messages.forEach(msg => msg.textContent = ''); // Limpiar texto
+             messages.forEach(msg => msg.className = 'message'); // Resetear clases (quita success/error/info)
+
+             // Limpiar formularios al cambiar de página (opcional, para login/registro)
+             if(pageElement === loginPage || pageElement === registerPage) {
+                  const form = pageElement.querySelector('form');
+                  if(form) form.reset();
+             }
+             // Asegurarse de que el scroll vuelva arriba al cambiar de "página"
+             window.scrollTo(0, 0);
+        }
+
+
+        // --- FUNCIÓN PARA ACTUALIZAR LA NAVEGACIÓN DEL HEADER ---
+        // ... (Esta función es la misma que en el código anterior) ...
+         function updateNav(user) {
+             if (user) {
+                 // Usuario logueado: Mostrar nombre, enlace a dashboard, ocultar "Iniciar Sesión"
+                 navAuthLinkButton.textContent = user.displayName || user.email || 'Usuario'; // Muestra el nombre o email
+                 navAuthLinkButton.classList.add('nav-link'); // Asegura que sea un enlace SPA
+                 navAuthLinkButton.dataset.target = 'dashboard-page'; // Que al clickearlo vaya al dashboard
+                 navDashboardLinkButton.style.display = 'inline-block'; // Muestra el botón del Dashboard en la nav principal
+
+             } else {
+                 // No logueado: Mostrar "Iniciar Sesión", ocultar nombre, ocultar dashboard
+                 navAuthLinkButton.innerHTML = '<i class="fas fa-sign-in-alt"></i> Iniciar sesión'; // Vuelve al texto original con icono
+                 navAuthLinkButton.classList.add('nav-link'); // Asegura que sea un enlace SPA
+                 navAuthLinkButton.dataset.target = 'login-page'; // Que al clickearlo vaya al login (o register-page si prefieres)
+                 navDashboardLinkButton.style.display = 'none'; // Oculta el botón del Dashboard
+             }
+         }
+
+
+        // --- LISTENERS DE NAVEGACIÓN (BOTONES/ENLACES INTERNOS CON CLASE nav-link) ---
+        // ... (Este listener es el mismo que en el código anterior, adaptado para la content-page) ...
+         document.body.addEventListener('click', (e) => {
+            const navLink = e.target.closest('.nav-link');
+            if (navLink) {
+                e.preventDefault(); // Prevenir el comportamiento por defecto
+
+                const targetPageId = navLink.dataset.target; // Obtener el ID de la sección de destino
+
+                if (!targetPageId) {
+                    console.warn("nav-link clickeado sin data-target:", navLink);
+                    return; // No hacer nada si no hay destino
+                }
+
+                const targetPageElement = document.getElementById(targetPageId);
+
+                if (targetPageElement) {
+                    // Lógica específica ANTES de mostrar la página
+                     let shouldShow = true; // Flag para permitir o no mostrar la página
+
+                     // Si la página requiere autenticación y no hay usuario
+                     const requiresAuth = [dashboardPage, configPage].includes(targetPageElement); // contentPage NO requiere auth si quieres mostrar contenido público
+                     if (requiresAuth && !currentUser) {
+                         console.warn(`Intento de acceder a página protegida (${targetPageId}) sin login. Redirigiendo a login.`);
+                         showPage(loginPage); // Redirige a login
+                         shouldShow = false; // No mostrar la página pedida
+                     }
+
+                     if (shouldShow) {
+                        showPage(targetPageElement); // Muestra la página
+
+
+                        // Lógica específica DESPUÉS de mostrar la página
+                        if (targetPageElement === dashboardPage && currentUser) {
+                            // Recargar datos del dashboard al ir a esa página
+                             loadMyProjects(currentUser.uid);
+                             loadGroupMembers();
+                             // Aquí puedes llamar a otras funciones para cargar más datos del dashboard
+                        } else if (targetPageElement === configPage && currentUser) {
+                            // Cargar datos de configuración al ir a esa página
+                            loadUserProfileSettings(currentUser.uid);
+                            // loadUserSettings(currentUser.uid); // Si implementas otros ajustes
+                        } else if (targetPageElement === contentPage) {
+                            // Cargar contenido específico cuando se va a la página de contenido
+                            const topicId = navLink.dataset.topicId; // Obtener el ID del tema del enlace
+                            if (topicId) {
+                                loadContent(topicId); // Llamar a la función para cargar el contenido del tema
+                            } else {
+                                console.warn("Clic en nav-link a content-page sin data-topic-id");
+                                contentPageTitleElement.textContent = "Contenido";
+                                contentPageDisplayElement.innerHTML = "<p>Selecciona un tema del menú 'Categorías' para ver su contenido aquí.</p>";
+                            }
+                        } else if (targetPageElement === landingPage) {
+                            // Lógica si vuelves al landing (ej: asegurar que mensajes de auth se limpien)
+                             loginMessageDiv.textContent = ''; loginMessageDiv.className = 'message';
+                             registerMessageDiv.textContent = ''; registerMessageDiv.className = 'message';
+                        }
+
+                    }
+
+
+                } else {
+                    console.error("Error de navegación: Página de destino no encontrada con ID:", targetPageId);
+                }
+            }
+        });
+
+
+        // --- VERIFICACIÓN INICIAL DE AUTENTICACIÓN AL CARGAR principal.html ---
+        // ... (Este listener es el mismo que en el código anterior, adaptado para mostrar landingPage) ...
+         auth.onAuthStateChanged(async (user) => {
+            console.log("onAuthStateChanged en principal.html:", user ? "Logueado" : "No logueado");
+
+            // Actualizar mensaje de carga (opcional, ya que se oculta rápido)
+            statusMessageElement.textContent = user ? "Usuario logueado. Cargando dashboard..." : "Usuario no logueado. Cargando opciones...";
+             updateNav(user); // Actualiza la barra de navegación (nombre/enlaces)
+
+            if (user) {
+                // Usuario logueado
+                currentUser = user;
+
+                 // Asegurar que el perfil exista en Firestore (importante para nuevos registros)
+                await ensureUserProfile(user);
+
+                // Mostrar el dashboard
+                showPage(dashboardPage);
+                 dashboardWelcomeMessageDiv.textContent = `Bienvenido, ${user.displayName || user.email || 'Usuario'}!`;
+                 dashboardProfileInfoSpan.textContent = user.displayName || user.email || 'N/A';
+
+                // Cargar datos iniciales del dashboard (se hace también al navegar, pero esto asegura que carguen al inicio)
+                loadMyProjects(currentUser.uid);
+                loadGroupMembers();
+
+
+            } else {
+                // No hay usuario logueado
+                currentUser = null;
+                // Mostrar la página de aterrizaje con opciones de login/registro
+                showPage(landingPage); // Muestra el landing page con enlaces a login/registro
+
+            }
+             console.log("auth.onAuthStateChanged finalizado.");
+        });
+
+         // --- FUNCIÓN AUXILIAR: Asegurar Perfil de Usuario en Firestore ---
+        // ... (Esta función es la misma que en el código anterior) ...
+         async function ensureUserProfile(user) {
+            if (!user) {
+                 console.error("ensureUserProfile llamado sin usuario.");
+                 return;
+             }
+            const userRef = db.collection('users').doc(user.uid);
+            try {
+                const doc = await userRef.get();
+
+                if (!doc.exists) {
+                    console.log(`Perfil de usuario ${user.uid} no encontrado, creando uno.`);
+                    await userRef.set({
+                         uid: user.uid,
+                         email: user.email,
+                         displayName: user.displayName || '', // Usa displayName de Auth si existe, si no vacío
+                         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                         lastLogin: firebase.firestore.FieldValue.serverTimestamp(), // Primer login es ahora
+                         skills: [], bio: '' // Campos por defecto
+                    });
+                    console.log("Perfil de usuario creado en Firestore.");
+                     // Intentar actualizar displayName en Auth si estaba vacío
+                     if (!user.displayName) {
+                         await user.updateProfile({ displayName: 'Usuario Nuevo' }).catch(err => console.error("Error actualizando Auth displayName:", err));
+                     }
+
+                } else {
+                    console.log(`Perfil de usuario ${user.uid} encontrado.`);
+                     // Opcional: Actualizar la fecha de último login
+                    await userRef.update({ lastLogin: firebase.firestore.FieldValue.serverTimestamp() }).catch(error => console.error("Error al actualizar lastLogin:", error));
+                     // Asegurar que el displayName en Auth esté sincronizado si el de Firestore es preferido
+                     // const userData = doc.data();
+                     // if (userData.displayName && user.displayName !== userData.displayName) {
+                     //     await user.updateProfile({ displayName: userData.displayName }).catch(err => console.error("Error sincronizando Auth displayName:", err));
+                     // }
+                }
+            } catch (error) {
+                console.error("Error al asegurar o actualizar el perfil de usuario en Firestore:", error);
+            }
+        }
+
+
+        // --- FUNCIONALIDAD: REGISTRO ---
+        // ... (Este listener es el mismo que en el código anterior) ...
+        if (registerForm) {
+            registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = registerEmailInput.value.trim();
+                const password = registerPasswordInput.value.trim();
+                const confirmPassword = registerConfirmPasswordInput.value.trim();
+
+                if (password !== confirmPassword) {
+                    registerMessageDiv.textContent = 'Las contraseñas no coinciden.';
+                    registerMessageDiv.className = 'message error';
+                    return;
+                }
+                // Añadir más validaciones de contraseña si es necesario (longitud, caracteres, etc.)
+
+                registerMessageDiv.textContent = 'Registrando usuario...'; registerMessageDiv.className = 'message info';
+                registerBtn.disabled = true;
+
+                try {
+                    const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+                    // Usuario creado y logueado automáticamente por Firebase Auth
+
+                    // Crear documento de perfil básico en Firestore inmediatamente
+                    await db.collection('users').doc(userCredential.user.uid).set({
+                         uid: userCredential.user.uid,
+                         email: email,
+                         displayName: '', // Deja el nombre vacío inicialmente
+                         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                         lastLogin: firebase.firestore.FieldValue.serverTimestamp(), // Primer login es ahora
+                         skills: [], bio: ''
+                    });
+                    console.log("Documento de perfil de usuario creado durante el registro.");
+
+
+                    registerMessageDiv.textContent = '¡Registro exitoso! Iniciando sesión...';
+                    registerMessageDiv.className = 'message success';
+
+                    // onAuthStateChanged se disparará automáticamente con el nuevo usuario logueado y mostrará el dashboard
+
+                } catch (error) {
+                    console.error("Error en el registro:", error);
+                    let errorMessage = error.message;
+                    // Mensajes de error más amigables
+                    if (error.code === 'auth/email-already-in-use') {
+                        errorMessage = 'Este email ya está registrado.';
+                    } else if (error.code === 'auth/invalid-email') {
+                         errorMessage = 'El formato del email es inválido.';
+                    } else if (error.code === 'auth/weak-password') {
+                         errorMessage = 'La contraseña es demasiado débil.';
+                    }
+                    registerMessageDiv.textContent = `Error: ${errorMessage}`;
+                    registerMessageDiv.className = 'message error';
+                } finally {
+                    registerBtn.disabled = false;
+                }
+            });
+        }
+
+
+        // --- FUNCIONALIDAD: INICIO DE SESIÓN ---
+         // ... (Este listener es el mismo que en el código anterior) ...
+         if (loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = loginEmailInput.value.trim();
+                const password = loginPasswordInput.value.trim();
+
+                 loginMessageDiv.textContent = 'Iniciando sesión...'; loginMessageDiv.className = 'message info';
+                 loginBtn.disabled = true;
+
+                try {
+                    await auth.signInWithEmailAndPassword(email, password);
+                    // Sesión iniciada exitosamente
+                    loginMessageDiv.textContent = '¡Inicio de sesión exitoso! Cargando dashboard...';
+                    loginMessageDiv.className = 'message success';
+
+                    // onAuthStateChanged se disparará automáticamente con el usuario logueado y mostrará el dashboard
+
+                } catch (error) {
+                    console.error("Error en el inicio de sesión:", error);
+                     let errorMessage = error.message;
+                     if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                         errorMessage = 'Email o contraseña incorrectos.';
+                     } else if (error.code === 'auth/invalid-email') {
+                          errorMessage = 'El formato del email es inválido.';
+                     } else if (error.code === 'auth/user-disabled') {
+                          errorMessage = 'Este usuario ha sido deshabilitado.';
+                     }
+
+                    loginMessageDiv.textContent = `Error: ${errorMessage}`;
+                    loginMessageDiv.className = 'message error';
+                } finally {
+                    loginBtn.disabled = false;
+                }
+            });
+         }
+
+
+         // --- FUNCIONALIDAD: CERRAR SESIÓN ---
+         // ... (Este listener es el mismo que en el código anterior) ...
+         if (signOutButton) {
+            signOutButton.addEventListener('click', async () => {
+                 // Mostrar mensaje de cierre de sesión en la sección del dashboard
+                 const dashboardMessageDiv = dashboardPage.querySelector('.message'); // Usar un mensaje dentro del dashboard si existe
+                 if (dashboardMessageDiv) {
+                     dashboardMessageDiv.textContent = 'Cerrando sesión...';
+                     dashboardMessageDiv.className = 'message info';
+                 }
+
+                 signOutButton.disabled = true;
+
+                try {
+                    await auth.signOut();
+                    console.log("Sesión cerrada exitosamente.");
+
+                    // onAuthStateChanged se disparará con 'user' = null y mostrará la página de login/registro (landingPage)
+
+                } catch (error) {
+                    console.error("Error al cerrar sesión:", error);
+                     if (dashboardMessageDiv) {
+                         dashboardMessageDiv.textContent = `Error al cerrar sesión: ${error.message}`;
+                         dashboardMessageDiv.className = 'message error';
+                     }
+                } finally {
+                    signOutButton.disabled = false;
+                }
+            });
+         }
+
+
+         // --- FUNCIONALIDADES DEL DASHBOARD (Copiadas y adaptadas) ---
+
+         // Create Project
+         // ... (Este listener es el mismo que en el código anterior) ...
+         if (createProjectBtn) {
+             createProjectBtn.addEventListener('click', async () => {
+                 const projectName = projectNameInput.value.trim();
+                 const projectDescription = projectDescriptionInput.value.trim();
+
+                 if (!projectName || !projectDescription) {
+                     createProjectMessageDiv.textContent = 'Completa todos los campos.';
+                     createProjectMessageDiv.className = 'message error'; return;
+                 }
+                 if (!currentUser) {
+                      createProjectMessageDiv.textContent = 'Error: Usuario no autenticado.';
+                      createProjectMessageDiv.className = 'message error'; return;
+                 }
+
+                 createProjectMessageDiv.textContent = 'Creando...'; createProjectMessageDiv.className = 'message info';
+                 createProjectBtn.disabled = true;
+
+                 try {
+                     await db.collection('projects').add({
+                         name: projectName,
+                         description: projectDescription,
+                         ownerId: currentUser.uid,
+                         ownerName: currentUser.displayName || currentUser.email || 'Desconocido',
+                         createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                     });
+
+                     createProjectMessageDiv.textContent = 'Proyecto creado.'; createProjectMessageDiv.className = 'message success';
+                     projectNameInput.value = ''; projectDescriptionInput.value = '';
+
+                     // La lista de proyectos se actualizará sola gracias al listener en loadMyProjects
+
+                 } catch (error) {
+                     console.error("Error creating project:", error);
+                     createProjectMessageDiv.textContent = `Error: ${error.message}`;
+                     createProjectMessageDiv.className = 'message error';
+                 } finally { createProjectBtn.disabled = false; }
+             });
+         }
+
+         // Load My Projects (Realtime)
+         // ... (Esta función es la misma que en el código anterior) ...
+         function loadMyProjects(userId) {
+              if (!userId) return;
+              myProjectsMessageDiv.textContent = 'Cargando tus proyectos...'; myProjectsMessageDiv.className = 'message info';
+              myProjectsListUl.innerHTML = '<li>Cargando...</li>';
+
+             db.collection('projects')
+               .where('ownerId', '==', userId)
+               .orderBy('createdAt', 'desc')
+               .onSnapshot((querySnapshot) => {
+                   myProjectsListUl.innerHTML = '';
+                   if (querySnapshot.empty) {
+                       myProjectsListUl.innerHTML = '<li>No tienes proyectos aún.</li>';
+                        myProjectsMessageDiv.textContent = 'No se encontraron tus proyectos.';
+                        myProjectsMessageDiv.className = 'message info';
+                       return;
+                   }
+
+                   querySnapshot.forEach((doc) => {
+                       const project = doc.data();
+                       const listItem = document.createElement('li');
+                       const date = project.createdAt ? project.createdAt.toDate().toLocaleDateString() : 'Fecha desconocida';
+                       listItem.innerHTML = `
+                           <h4>${project.name}</h4>
+                           <p>${project.description}</p>
+                           <span class="item-meta">Creado el: ${date}</span>
+                           `;
+                       myProjectsListUl.appendChild(listItem);
+                   });
+                    myProjectsMessageDiv.textContent = `Mostrando ${querySnapshot.size} proyecto(s).`;
+                    myProjectsMessageDiv.className = 'message success';
+
+               }, (error) => {
+                   console.error("Error loading projects:", error);
+                    myProjectsListUl.innerHTML = '<li>Error al cargar proyectos.</li>';
+                    myProjectsMessageDiv.textContent = `Error: ${error.message}`;
+                    myProjectsMessageDiv.className = 'message error';
+               });
+         }
+
+          // Load Group Members (Placeholder - Basic)
+          // ... (Esta función es la misma que en el código anterior) ...
+          function loadGroupMembers() {
+               groupMembersListUl.innerHTML = '<li>Cargando miembros...</li>';
+               groupMembersMessageDiv.textContent = 'Funcionalidad para listar miembros pendiente.';
+               groupMembersMessageDiv.className = 'message info';
+
+              // TODO: Add actual logic here to fetch members from Firestore 'users' collection
+              // For now, just simulate or show a static message
+              setTimeout(() => { // Simula carga o muestra un mensaje estático
+                 groupMembersListUl.innerHTML = '<li>Aquí iría la lista de miembros del grupo.</li>';
+                 groupMembersMessageDiv.textContent = 'Sección de miembros.';
+                 groupMembersMessageDiv.className = 'message info'; // or remove class if needed
+              }, 1000);
+
+          }
+
+
+         // --- FUNCIONALIDADES DE CONFIGURACIÓN (Copiadas y adaptadas) ---
+
+         // Load User Profile Settings
+         // ... (Esta función es la misma que en el código anterior) ...
+        async function loadUserProfileSettings(userId) {
+            if (!userId) { console.error("loadUserProfileSettings called without userId"); return; }
+            const userRef = db.collection('users').doc(userId);
+            try {
+                const doc = await userRef.get();
+                if (doc.exists) {
+                    const userData = doc.data();
+                    console.log("Datos de perfil cargados para Config:", userData);
+                    configDisplayNameInput.value = userData.displayName || '';
+                    configEmailInput.value = userData.email || currentUser.email || '';
+                    configBioInput.value = userData.bio || '';
+                    configSkillsInput.value = userData.skills ? userData.skills.join(', ') : '';
+
+                     profileSettingsMessageDiv.textContent = '';
+                     profileSettingsMessageDiv.className = 'message';
+
+                } else {
+                    console.warn("Documento de perfil del usuario no encontrado en Firestore.");
+                     profileSettingsMessageDiv.textContent = 'No se encontraron datos de perfil. Puedes añadir la información.';
+                     profileSettingsMessageDiv.className = 'message info';
+                     configEmailInput.value = currentUser.email || '';
+                }
+            } catch (error) {
+                console.error("Error al cargar la configuración del perfil:", error);
+                 profileSettingsMessageDiv.textContent = `Error al cargar perfil: ${error.message}`;
+                 profileSettingsMessageDiv.className = 'message error';
+                 configEmailInput.value = currentUser.email || '';
+            }
+        }
+
+        // Save User Profile Settings
+        // ... (Este listener es el mismo que en el código anterior) ...
+         if (profileSettingsForm) {
+            profileSettingsForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (!currentUser) {
+                    profileSettingsMessageDiv.textContent = 'Error: Usuario no autenticado.';
+                    profileSettingsMessageDiv.className = 'message error'; return;
+                }
+
+                profileSettingsMessageDiv.textContent = 'Guardando cambios...'; profileSettingsMessageDiv.className = 'message info';
+                saveProfileSettingsBtn.disabled = true;
+
+                const userRef = db.collection('users').doc(currentUser.uid);
+
+                const updatedData = {
+                    displayName: configDisplayNameInput.value.trim(),
+                    bio: configBioInput.value.trim(),
+                    skills: configSkillsInput.value.split(',').map(skill => skill.trim()).filter(skill => skill !== '')
+                };
+
+                try {
+                    // Usar update() para no sobrescribir todo el documento
+                    await userRef.update(updatedData);
+                    console.log("Perfil actualizado exitosamente en Firestore.");
+                    profileSettingsMessageDiv.textContent = 'Perfil actualizado exitosamente.'; profileSettingsMessageDiv.className = 'message success';
+
+                    // Actualizar displayName en Firebase Auth también si se cambió y no está vacío
+                     if (currentUser.displayName !== updatedData.displayName && updatedData.displayName !== '') {
+                         await currentUser.updateProfile({ displayName: updatedData.displayName });
+                         console.log("DisplayName en Auth actualizado.");
+                     }
+
+                    // Actualizar el nombre mostrado en el dashboard y navegación inmediatamente
+                     const displayValue = updatedData.displayName || currentUser.email || 'Usuario';
+                     dashboardWelcomeMessageDiv.textContent = `Bienvenido, ${displayValue}!`;
+                     dashboardProfileInfoSpan.textContent = displayValue;
+                     updateNav(auth.currentUser); // Llama a updateNav con el user object actual
+
+
+                } catch (error) {
+                    console.error("Error al guardar la configuración del perfil:", error);
+                    profileSettingsMessageDiv.textContent = `Error al guardar perfil: ${error.message}`;
+                    profileSettingsMessageDiv.className = 'message error';
+                } finally {
+                    saveProfileSettingsBtn.disabled = false;
+                }
+            });
+        }
+
+         // Placeholder for Language Change (General Settings)
+         // ... (Este listener es el mismo que en el código anterior) ...
+         if (configLanguageSelect) {
+             configLanguageSelect.addEventListener('change', (e) => {
+                 const selectedLang = e.target.value;
+                 console.log("Idioma seleccionado:", selectedLang, "- Funcionalidad de guardado/aplicación pendiente.");
+                 // TODO: Implement saving language preference to Firestore for the user
+                 // TODO: Implement logic to change UI language based on saved preference on load/change
+             });
+         }
+
+         // --- FUNCIONALIDAD PARA CARGAR CONTENIDO DE TEMAS (AHORA USA topicContents) ---
+         function loadContent(topicId) {
+             console.log("Cargando contenido para tema:", topicId);
+
+             const content = topicContents[topicId]; // Buscar el contenido en el objeto
+
+             if (content) {
+                 // Mostrar título y contenido si se encuentra
+                 contentPageTitleElement.textContent = content.title;
+                 contentPageDisplayElement.innerHTML = content.htmlContent; // Usar innerHTML para insertar HTML
+                 console.log(`Contenido cargado para tema: ${topicId}.`);
+             } else {
+                 // Mostrar mensaje si el tema no se encuentra
+                 contentPageTitleElement.textContent = "Contenido no disponible";
+                 contentPageDisplayElement.innerHTML = "<p>No se encontró contenido para el tema seleccionado.</p>";
+                 console.warn(`Contenido no encontrado para tema: ${topicId}.`);
+             }
+         }
+
+
+    </script>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 Coding Study Group - Todos los derechos reservados.</p>
+            <div class="social-icons">
+                 <a href="https://twitter.com/TuUsuario" target="_blank"><i class="fab fa-twitter"></i></a>
+                <a href="https://instagram.com/TuUsuario" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://linkedin.com/company/TuEmpresa" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    </body>
+</html>
